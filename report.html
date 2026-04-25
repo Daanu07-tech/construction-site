@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Site Report - Final Professional</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+
+<header class="header">
+    <h2>📋 Site Report</h2>
+    <a href="index.html">← Back</a>
+</header>
+
+<input id="client" placeholder="Client">
+<input id="consultant" placeholder="Consultant">
+<input id="contractor" placeholder="Contractor">
+<input id="project" placeholder="Project Name">
+<input id="title" placeholder="Report Title">
+
+<div id="rows"></div>
+<div id="reports"></div>
+
+<div class="action-bar">
+    <button class="btn btn-secondary" onclick="addRow()">➕ Add Row</button>
+    <button class="btn btn-primary"   onclick="generatePDF()">📄 Generate PDF</button>
+    <button class="btn btn-primary" onclick="saveToServer()">💾 Save</button>
+</div>
+
+<!-- ══════════════ Camera Modal ══════════════ -->
+<div id="cameraModal">
+    <div class="modal-title">📷 Take Photo</div>
+
+    <video id="cameraVideo" autoplay playsinline></video>
+    <canvas id="cameraCanvas"></canvas>
+    <img id="capturedPreview" alt="Captured">
+
+    <div class="modal-actions" id="liveActions">
+        <button class="btn btn-primary"   onclick="capturePhoto()">📸 Capture</button>
+        <button class="btn btn-secondary" onclick="closeCamera()">✕ Cancel</button>
+    </div>
+
+    <div class="modal-actions" id="previewActions" style="display:none;">
+        <button class="btn btn-primary"   onclick="confirmPhoto()">✔ Use Photo</button>
+        <button class="btn btn-secondary" onclick="retakePhoto()">🔄 Retake</button>
+        <button class="btn btn-danger"    onclick="closeCamera()">✕ Cancel</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

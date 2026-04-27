@@ -281,7 +281,7 @@ async function saveToServer() {
             rows: collect()
         };
 
-        await fetch("http://localhost:5000/save-report", {
+        await fetch("http://construction-site-iiy0.onrender.com/save-report", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)

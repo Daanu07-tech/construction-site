@@ -319,4 +319,61 @@ window.onload = () => {
   });
 };
 
-document.query
+document.querySelector("form").reset();
+
+async function saveReport() {
+  try {
+    const data = {
+      client: document.getElementById("client").value,
+      consultant: document.getElementById("consultant").value,
+      contractor: document.getElementById("contractor").value,
+      project: document.getElementById("project").value,
+      title: document.getElementById("title").value
+    };
+
+    const res = await fetch("https://construction-site-iiy0.onrender.com/save-report", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    });
+
+    if (res.ok) {
+      alert("Saved successfully ✅");
+
+      // 👉 ADD THIS LINE HERE
+      document.querySelector("form")?.reset();
+
+    } else {
+      alert("Error saving report ❌");
+    }
+
+  } catch (err) {
+    console.error(err);
+    alert("Error saving report ❌");
+  }
+}
+
+async function loadReports() {
+  try {
+    const res = await fetch("https://construction-site-iiy0.onrender.com/reports");
+    const data = await res.json();
+
+    console.log("Loaded data:", data);
+
+    // 👉 OPTIONAL: clear form before filling
+    document.querySelector("form")?.reset();
+
+  } catch (err) {
+    console.error("Error loading reports:", err);
+  }
+}
+
+window.onload = () => {
+    loadReports();
+};
+
+window.addEventListener("pageshow", () => {
+    document.querySelector("form")?.reset();
+});

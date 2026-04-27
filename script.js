@@ -272,24 +272,28 @@ async function generatePDF() {
 // SAVE TO BACKEND
 async function saveToServer() {
   try {
-        const payload = {
-            client: client.value,
-            consultant: consultant.value,
-            contractor: contractor.value,
-            project: project.value,
-            title: title.value,
+        const data = {
+            client: document.getElementById("client").value,
+            consultant: document.getElementById("consultant").value,
+            contractor: document.getElementById("contractor").value,
+            project: document.getElementById("project").value,
+            title: document.getElementById("title").value,
             rows: collect()
         };
 
-        await fetch("http://construction-site-iiy0.onrender.com/save-report", {
+        const res = await fetch("http://construction-site-iiy0.onrender.com/save-report", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
+            headers: { 
+                "Content-Type": "application/json"
+             },
+            body: JSON.stringify(data)
         });
-
-        alert("✅ Report saved successfully!");
-
-    } catch (err) {
+        if (!res.ok) {
+            alert("✅ Report saved successfully!");
+        } else {
+            alert("Error saving report ❌");
+        }
+      }  catch (err) {
         alert("❌ Error saving report");
         console.error(err);
     }  
@@ -306,3 +310,12 @@ if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("sw.js")
     .then(() => console.log("Service Worker Registered"));
 }
+
+document.getElementById("client_input").value
+
+window.onload = () => {
+  document.querySelectorAll("input").forEach(input => {
+    input.value = "";
+  });
+};
+

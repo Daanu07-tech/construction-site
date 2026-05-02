@@ -53,17 +53,6 @@
             touch-action: manipulation;
         }
 
-        .btn {
-            width: 100%;
-            padding: 12px;
-            margin: 5px 0;
-            border-radius: 6px;
-            border: none;
-            font-weight: bold;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
         .btn-primary   { 
             background: #84cc16; 
             color: black;
@@ -298,11 +287,11 @@ label {
 a {
    display: inline-block;
   margin-top: 20px;
-  padding: 12px 20px;
-  background: #2ecc71;
-  color: white;
+  padding: 10px 20px;
+  background: green;
+  color: white; 
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: 5px;
   font-weight: bold;  
 }
 
@@ -323,4 +312,15 @@ button {
 
 button:hover {
   background: #27ae60;
+}
+
+.btn {
+  background: #28a745;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 15px;
+  font-weight: bold;
 }

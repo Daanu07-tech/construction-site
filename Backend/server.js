@@ -34,11 +34,14 @@ app.post("/reports", async (req, res) => {
 
 app.get("/reports", async (req, res) => {
   try {
-    const data = (await Report.find()).toSorted({ createdAt: -1 });
+    const data = (await Report.find()).sort({ createdAt: -1 });
+
+    console.log("Reports fetched:", data);
+
     res.json(data);
   } catch (err) {
-    console.error(err);
-    res.status(500).send("Error fetching reports");
+    console.error("❌ ERROR IN /reports:", err);
+    res.status(500).json({ error: "Failed to fetch reports" });
   }
 });
 

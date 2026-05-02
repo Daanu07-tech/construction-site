@@ -2,27 +2,29 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-app.use(cors({
-  origin: "https://construction-site-delta-six.vercel.app"
-}));
 
 const app = express();
+
+app.use(cors({
+  origin: "https://construction-site-3ohf.vercel.app"
+}));
+
 app.use(express.json({ limit: "10mb" }));
 
 mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log("✅MongoDB connected"))
+.then(() => console.log("✅ MongoDB connected"))
 .catch(err => console.log("❌ Mongo error:",err));
 
-const Report = mongoose.model("Report", {
+const Report = mongoose.model("Report", new mongoose.Schema({
   client: String,
   consultant: String,
   contractor: String,
   project: String,
   title: String,
   rows: Array
-});
+}, { timestamps: true }));
 
-app.post("/save-report", async (req, res) => {
+app.post("/reports", async (req, res) => {
   await Report.create(req.body);
   res.send("Saved");
 });
@@ -32,15 +34,13 @@ app.get("/reports", async (req, res) => {
   res.json(data);
 });
 
-app.listen(5000, () => console.log("Server running"));
+app.get("/", (req, res) => {
+  res.send("API is running 🚀");
+});
 
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log("Server running");
-});
-
-app.get("/", (req, res) => {
-  res.send("API is running 🚀");
+  console.log("Server running on port " + PORT);
 });
 

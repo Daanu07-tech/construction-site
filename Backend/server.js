@@ -4,14 +4,17 @@ const cors = require("cors");
 
 const app = express();
 
+// Allow All origins (for now)
 app.use(cors());
 
 app.use(express.json({ limit: "10mb" }));
 
+// DEBUG
 console.log("MONGO_URI:", process.env.MONGO_URI);
+
 mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log("✅ MongoDB connected"))
-.catch(err => console.log("❌ Mongo error:",err));
+.catch(err => console.log("❌ Mongo error:", err));
 
 const Report = mongoose.model("Report", new mongoose.Schema({
   client: String,
@@ -22,26 +25,25 @@ const Report = mongoose.model("Report", new mongoose.Schema({
   rows: Array
 }, { timestamps: true }));
 
+// SAVE
 app.post("/reports", async (req, res) => {
   try {
-    await Report.create(req.body);
-    res.send("Saved");
+    const saved = await Report.create(req.body);
+    res.json(saved);
   } catch (err) {
-    console.error(err);
+    console.log(err);
     res.status(500).send("Error saving report");
   }
 });
 
+// FETCH
 app.get("/reports", async (req, res) => {
   try {
     const data = (await Report.find()).sort({ createdAt: -1 });
-
-    console.log("Reports fetched:", data);
-
     res.json(data);
   } catch (err) {
-    console.error("❌ ERROR IN /reports:", err);
-    res.status(500).json({ error: "Failed to fetch reports" });
+    console.log(err);
+    res.status(500).send("Error fetching reports");
   }
 });
 

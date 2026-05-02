@@ -322,3 +322,31 @@ function openReport() {
     window.location.href = "report.html";
 }
 
+async function loadReports() {
+    try {
+        const res = await fetch("https://construction-site-iiy0.onrender.com/reports");
+
+        if (!res.ok) throw new Error("Failed to fetch");
+
+        const data = await res.json();
+
+        const container = document.getElementById("reports");
+
+        container.innerHTML = "";
+
+        data.forEach(report => {
+            const div = document.createElement("div");
+            div.innerHTML = `
+                <h3>${report.title}</h3>
+                <p><b>Client:</b> ${report.client}</p>
+                <p><b>Project:</b> ${report.project}</p>
+                <hr>
+            `;
+            container.appendChild(div);
+        });
+
+    } catch (err) {
+        console.error(err);
+        document.getElementById("reports").innerText = "Error fetching reports";
+    }
+}

@@ -281,7 +281,8 @@ async function saveToServer() {
             rows: collect()
         };
 
-        const res = await fetch("https://construction-site-iiy0.onrender.com/save-report", {
+
+        const res = await fetch("https://construction-site-iiy0.onrender.com/reports", {
             method: "POST",
             headers: { 
                 "Content-Type": "application/json"
@@ -302,7 +303,7 @@ async function saveToServer() {
       }  
 }
 
-window.pnload = () => {
+window.onload = () => {
     addRow();
 
     document.querySelectorAll("input, textarea").forEach(el =>  el.value = "");
@@ -311,7 +312,10 @@ window.pnload = () => {
 console.log("JS is working");
 
 window.addEventListener("pageshow", () => {
-    document.querySelector("form")?.reset();
+    document.querySelector("input, textarea").forEach(el => el.value = "");
+    rowsData = [];
+    document.getElementById("rows").innerHTML = "";
+    addRow();
 });
 
 function openReport() {

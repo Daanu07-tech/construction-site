@@ -22,13 +22,23 @@ const Report = mongoose.model("Report", new mongoose.Schema({
 }, { timestamps: true }));
 
 app.post("/reports", async (req, res) => {
-  await Report.create(req.body);
-  res.send("Saved");
+  try {
+    await Report.create(req.body);
+    res.send("Saved");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error saving report");
+  }
 });
 
 app.get("/reports", async (req, res) => {
-  const data = await Report.find().sort({ createdAt: -1 });
-  res.json(data);
+  try {
+    const data = (await Report.find()).toSorted({ createdAt: -1 });
+    res.json(data);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error fetching reports");
+  }
 });
 
 app.get("/", (req, res) => {

@@ -281,99 +281,40 @@ async function saveToServer() {
             rows: collect()
         };
 
-        const res = await fetch("http://construction-site-iiy0.onrender.com/save-report", {
+        const res = await fetch("https://construction-site-iiy0.onrender.com/save-report", {
             method: "POST",
             headers: { 
                 "Content-Type": "application/json"
              },
             body: JSON.stringify(data)
         });
-        if (!res.ok) {
+
+        if (res.ok) {
             alert("✅ Report saved successfully!");
+            document.querySelector("form")?.reset();
         } else {
-            alert("Error saving report ❌");
+            alert("❌Error saving report");
         }
-      }  catch (err) {
-        alert("❌ Error saving report");
+
+      } catch (err) {
         console.error(err);
-    }  
+        alert("❌Error saving report");
+      }  
 }
 
-
-window.onload = function () {
+window.pnload = () => {
     addRow();
+
+    document.querySelectorAll("input, textarea").forEach(el =>  el.value = "");
 };
 
 console.log("JS is working");
 
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js")
-    .then(() => console.log("Service Worker Registered"));
-}
-
-document.getElementById("client_input").value
-
-window.onload = () => {
-  document.querySelectorAll("input").forEach(input => {
-    input.value = "";
-  });
-};
-
-document.querySelector("form").reset();
-
-async function saveReport() {
-  try {
-    const data = {
-      client: document.getElementById("client").value,
-      consultant: document.getElementById("consultant").value,
-      contractor: document.getElementById("contractor").value,
-      project: document.getElementById("project").value,
-      title: document.getElementById("title").value
-    };
-
-    const res = await fetch("https://construction-site-iiy0.onrender.com/save-report", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    });
-
-    if (res.ok) {
-      alert("Saved successfully ✅");
-
-      // 👉 ADD THIS LINE HERE
-      document.querySelector("form")?.reset();
-
-    } else {
-      alert("Error saving report ❌");
-    }
-
-  } catch (err) {
-    console.error(err);
-    alert("Error saving report ❌");
-  }
-}
-
-async function loadReports() {
-  try {
-    const res = await fetch("https://construction-site-iiy0.onrender.com/reports");
-    const data = await res.json();
-
-    console.log("Loaded data:", data);
-
-    // 👉 OPTIONAL: clear form before filling
-    document.querySelector("form")?.reset();
-
-  } catch (err) {
-    console.error("Error loading reports:", err);
-  }
-}
-
-window.onload = () => {
-    loadReports();
-};
-
 window.addEventListener("pageshow", () => {
     document.querySelector("form")?.reset();
 });
+
+function openReport() {
+    window.location.href = "report.html";
+}
+

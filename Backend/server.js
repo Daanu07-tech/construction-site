@@ -1,17 +1,17 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+app.use(cors({
+  origin: "https://construction-site-delta-six.vercel.app"
+}));
 
 const app = express();
-app.use(cors());
 app.use(express.json({ limit: "10mb" }));
 
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log("MongoDB connected"))
-.catch(err => console.log("Mongo error:", err));
+mongoose.connect(process.env.MONGO_URI)
+.then(() => console.log("✅MongoDB connected"))
+.catch(err => console.log("❌ Mongo error:",err));
 
 const Report = mongoose.model("Report", {
   client: String,
@@ -43,3 +43,4 @@ app.listen(PORT, () => {
 app.get("/", (req, res) => {
   res.send("API is running 🚀");
 });
+
